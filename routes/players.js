@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 })
 
 //Getting one player
-router.get('/:id', getPlayer, (req, res) => {
+router.get('/:name', getPlayer, (req, res) => {
     res.json(res.player)
 })
 
@@ -71,7 +71,7 @@ router.delete('/:id', getPlayer, async (req, res) => {
 async function getPlayer(req, res, next){
     let player
     try {
-        player = await Player.findById(req.params.id)
+        player = await Player.find({name: req.params.name})
         if(player == null){
             return res.status(404).json({message: 'Cannot Find Player'})
         }
