@@ -10,9 +10,14 @@ db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('Connected to Database'))
 
 app.use(express.json())
-
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 const playersRouter = require('./routes/players')
 app.use('/players', playersRouter)
+
 
 app.listen(process.env.PORT||3000, ()=>{
     console.log("Server Started")
